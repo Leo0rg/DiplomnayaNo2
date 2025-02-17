@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Розклад занять{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>Фільтри розкладу</h3>
+            </div>
+            <div class="card-body">
+                <form method="GET" class="row g-3">
+                    <div class="col-md-4">
+                        <label for="group" class="form-label">Група</label>
+                        <input type="text" class="form-control" id="group" name="group" value="{{ request.args.get('group', '') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="date" class="form-label">Дата</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ request.args.get('date', '') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="teacher" class="form-label">Викладач</label>
+                        <select class="form-select" id="teacher_id" name="teacher_id">
+                            <option value="">Всі викладачі</option>
+                            {% for teacher in teachers %}
+                            <option value="{{ teacher.id }}" {% if request.args.get('teacher_id')|int == teacher.id %}selected{% endif %}>
+                                {{ teacher.username }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary">Застосувати фільтри</button>
+                        <a href="{{ url_for('view_schedule') }}" class="btn btn-secondary">Скинути</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>Розклад занять</h3>
+            </div>
+            <div class="card-body">
+                {% if schedules %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Дата</th>
+                                <th>Час</th>
+                                <th>Предмет</th>
+                                <th>Викладач</th>
+                                <th>Група</th>
+                                <th>Аудиторія</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for schedule in schedules %}
+                            <tr>
+                                <td>{{ schedule.date.strftime('%d.%m.%Y') }}</td>
+                                <td>{{ schedule.start_time }} - {{ schedule.end_time }}</td>
+                                <td>{{ schedule.subject }}</td>
+                                <td>{{ schedule.teacher.username }}</td>
+                                <td>{{ schedule.group }}</td>
+                                <td>{{ schedule.room }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">Заняття не знайдено</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

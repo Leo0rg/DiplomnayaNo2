@@ -21,7 +21,7 @@
 1. Клонуйте репозиторій:
 
 ```bash
-git clone <url-репозиторію>
+git clone https://github.com/Leo0rg/DiplomnayaNo2
 cd DiplomnayaNo2
 ```
 

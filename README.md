@@ -94,15 +94,19 @@ python make_admin.py
 
 ```plaintext
 schedule_app/
+├── models/
+│   ├── __init__.py
+│   ├── user.py
+│   └── schedule.py
 ├── static/
 │   ├── css/
 │   └── js/
 ├── templates/
 │   ├── auth/
 │   └── admin/
+├── auth/
+│   └── __init__.py
 ├── app.py
-├── auth.py
-├── models.py
 └── make_admin.py
 ```
 
